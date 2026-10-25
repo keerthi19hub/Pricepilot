@@ -1,11 +1,14 @@
 services:
   - type: web
     name: pricepilot
-    env: docker
+    env: python
     plan: free
     region: oregon
-    dockerfilePath: ./Dockerfile
+    buildCommand: "npm --prefix frontend install && npm --prefix frontend run build && pip install -r backend/requirements.txt && python -m backend.app.seed.seed_data"
+    startCommand: "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
+      - key: PYTHONPATH
+        value: "."
       - key: SECRET_KEY
         generateValue: true
       - key: DEMO_MODE
