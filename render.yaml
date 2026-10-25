@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pricepilot
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEMO_MODE
+        value: "true"
+      - key: DATABASE_URL
+        value: "sqlite:///./pricepilot.db"
